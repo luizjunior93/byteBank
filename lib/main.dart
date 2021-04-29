@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(ByteBankTwoApp());
-
-  //findAll().then((contacts) => debugPrint(contacts.toString()));
 }
 
 class ByteBankTwoApp extends StatelessWidget {
