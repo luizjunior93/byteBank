@@ -18,7 +18,7 @@ class _ContactsListState extends State<ContactsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contatos'),
+        title: Text('Transfer'),
       ),
       body: FutureBuilder<List<Contact>>(
         initialData: [],
@@ -40,7 +40,6 @@ class _ContactsListState extends State<ContactsList> {
               );
               break;
             case ConnectionState.active:
-              // TODO: Handle this case.
               break;
             case ConnectionState.done:
               final List<Contact> contacts = snapshot.data;
