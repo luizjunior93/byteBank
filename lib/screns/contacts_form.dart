@@ -43,7 +43,7 @@ class _ContactFormState extends State<ContactForm> {
               padding: EdgeInsets.only(top: 16.0),
               child: SizedBox(
                 width: double.maxFinite,
-                child: RaisedButton(
+                child: ElevatedButton(
                   child: Text('Salvar'),
                   onPressed: () {
                     final String name = _nameController.text;
