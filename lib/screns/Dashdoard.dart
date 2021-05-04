@@ -16,23 +16,44 @@ class Dashboard extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Image.asset('images/bytebank_logo.png'),
           ),
-          Row(
-            children: [
-              _FutureItem('Transfer', Icons.monetization_on),
-              _FutureItem('Transaction Feed', Icons.description),
-            ],
+          Container(
+            height: 120,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                _FutureItem(
+                  'Transfer',
+                  Icons.monetization_on,
+                  onclick: () {
+                    _ShowContactsList(context);
+                  },
+                ),
+                _FutureItem(
+                  'Transaction Feed',
+                  Icons.description,
+                  onclick: () => print('transaction feed was clicked'),
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
+  }
+
+  void _ShowContactsList(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => ContactsList(),
+    ));
   }
 }
 
 class _FutureItem extends StatelessWidget {
   final String name;
   final IconData icon;
+  final Function onclick;
 
-  const _FutureItem(this.name, this.icon);
+  const _FutureItem(this.name, this.icon, {@required this.onclick});
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +62,9 @@ class _FutureItem extends StatelessWidget {
         child: Material(
             color: Theme.of(context).primaryColor,
             child: InkWell(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => ContactsList(),
-                ));
-              },
+              onTap: () => onclick(),
               child: Container(
                 padding: EdgeInsets.all(8.0),
-                height: 100,
                 width: 150,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
