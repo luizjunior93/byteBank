@@ -1,5 +1,7 @@
 import 'package:byteBankTwo/database/dao/contact_dao.dart';
 import 'package:byteBankTwo/models/contact.dart';
+import 'package:byteBankTwo/screns/transaction_form.dart';
+import 'package:byteBankTwo/widgets/progress.dart';
 import 'package:flutter/material.dart';
 
 import 'contacts_form.dart';
@@ -28,16 +30,7 @@ class _ContactsListState extends State<ContactsList> {
             case ConnectionState.none:
               break;
             case ConnectionState.waiting:
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    CircularProgressIndicator(),
-                    Text('Looding'),
-                  ],
-                ),
-              );
+              return Progress();
               break;
             case ConnectionState.active:
               break;
@@ -46,7 +39,16 @@ class _ContactsListState extends State<ContactsList> {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final Contact contact = contacts[index];
-                  return _ContactItem(contact);
+                  return _ContactItem(
+                    contact,
+                    onClick: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => TransactionForm(contact),
+                        ),
+                      );
+                    },
+                  );
                 },
                 itemCount: contacts.length,
               );
@@ -77,13 +79,18 @@ class _ContactsListState extends State<ContactsList> {
 
 class _ContactItem extends StatelessWidget {
   final Contact contact;
+  final Function onClick;
 
-  _ContactItem(this.contact);
+  _ContactItem(
+    this.contact, {
+    @required this.onClick,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
         child: ListTile(
+      onTap: () => onClick(),
       title: Text(
         contact.name,
         style: TextStyle(fontSize: 24.0),
